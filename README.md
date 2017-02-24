@@ -6,7 +6,7 @@ Read the following instructions to get the web portfolio project running on the 
 
 1. Clone and download the project's repo:
 ~~~~
-https://github.com/ikhancode/frontend-nanodegree-mobile-portfolio
+https://github.com/ikhancode/Udacity-FEWD-Nanodegree---Web-Optimization.git
 ~~~~
 2. To inspect the site, you can run a local server
 
