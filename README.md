@@ -15,7 +15,7 @@ https://github.com/ikhancode/Udacity-FEWD-Nanodegree---Web-Optimization.git
   $> python3 -m http.server
   ```
 
-3. Open a browser and visit localhost:8080
+3. Open a browser and visit localhost:8000
 4. Now run ngrok on a separate terminal
 
   ``` bash
