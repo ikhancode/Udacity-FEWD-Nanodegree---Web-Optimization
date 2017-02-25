@@ -538,13 +538,16 @@ function updatePositions() {
 
   /*Put this property lookup in a variable outside the loop so that it is only computed once instead of looking up in
   every iteration of the loop. This makes the loop run faster.*/
-  var scrollTop = document.body.scrollTop / 1250;
 
-  for (var i = 0; i < itemsLength; i++) {
-    phase.push(Math.sin((scrollTop) + (i % 5)));
-    items[i].style.left = items[i].basicLeft + 100 * phase[i % itemsLength] + 'px';
+  var topPos = document.body.scrollTop / 1250;
+
+  //Since the phases repeat, only first 5 phases are needed to be calculated.
+  for (var i = 0; i < 5; i++) {
+    phase.push(Math.sin((topPos) + (i % 5)));
   }
-
+  for (var i = 0; i < itemsLength; i++) {
+    items[i].style.left = items[i].basicLeft + 100 * phase[i % 5] + 'px';
+  }
   // User Timing API to the rescue again. Seriously, it's worth learning.
   // Super easy to create custom metrics.
   window.performance.mark("mark_end_frame");
@@ -568,7 +571,10 @@ document.addEventListener('DOMContentLoaded', function() {
   loop (thus making the loop run faster). Also replaced querySelector method with a much faster one, getElementByID.*/
   var movPiz = document.getElementById("movingPizzas1");
 
-  for (var i = 0; i < 200; i++) {
+   // Dynamic way of setting number of pizzas needed to cover the user's screen
+  var rows = window.screen.height / s;
+  var perfNumPizzas = Math.ceil(rows * cols);
+  for (var i = 0; i < perfNumPizzas; i++) {
     elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";

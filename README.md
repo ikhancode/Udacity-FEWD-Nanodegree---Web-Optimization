@@ -47,6 +47,7 @@ var randPiz = document.getElementById("randomPizzas");
 ~~~~
 * Refactored this function. Comments in the code below.
 ~~~~
+// Moves the sliding background pizzas based on scroll position
 function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
@@ -63,13 +64,16 @@ function updatePositions() {
 
   /*Put this property lookup in a variable outside the loop so that it is only computed once instead of looking up in
   every iteration of the loop. This makes the loop run faster.*/
-  var scrollTop = document.body.scrollTop / 1250;
 
-  for (var i = 0; i < itemsLength; i++) {
-    phase.push(Math.sin((scrollTop) + (i % 5)));
-    items[i].style.left = items[i].basicLeft + 100 * phase[i % itemsLength] + 'px';
+  var topPos = document.body.scrollTop / 1250;
+
+  //Since the phases repeat, only first 5 phases are needed to be calculated.
+  for (var i = 0; i < 5; i++) {
+    phase.push(Math.sin((topPos) + (i % 5)));
   }
-
+  for (var i = 0; i < itemsLength; i++) {
+    items[i].style.left = items[i].basicLeft + 100 * phase[i % 5] + 'px';
+  }
   // User Timing API to the rescue again. Seriously, it's worth learning.
   // Super easy to create custom metrics.
   window.performance.mark("mark_end_frame");
@@ -121,6 +125,35 @@ Time to resize pizzas is less than 5 ms using the pizza size slider on the views
       randomPizzas[i].style.width = newWidth + "%";
     }
   }
+  ~~~~
+  *Main thing I changed here is to make the function dynamically set the amount of pizza's depending on the size of user's screen
+  ~~~~
+  // Generates the sliding pizzas when the page loads.
+document.addEventListener('DOMContentLoaded', function() {
+  var cols = 8;
+  var s = 256;
+  var elem = "";
+
+  /*Assigned this DOM traversal in a variable outside the loop to avoid repeated traversing in the
+  loop (thus making the loop run faster). Also replaced querySelector method with a much faster one, getElementByID.*/
+  var movPiz = document.getElementById("movingPizzas1");
+
+   // Dynamic way of setting number of pizzas needed to cover the user's screen
+  var rows = window.screen.height / s;
+  var perfNumPizzas = Math.ceil(rows * cols);
+
+  for (var i = 0; i < perfNumPizzas; i++) {
+    elem = document.createElement('img');
+    elem.className = 'mover';
+    elem.src = "images/pizza.png";
+    elem.style.height = "100px";
+    elem.style.width = "73.333px";
+    elem.basicLeft = (i % cols) * s;
+    elem.style.top = (Math.floor(i / cols) * s) + 'px';
+    movPiz.appendChild(elem);
+  }
+  updatePositions();
+});
   ~~~~
 
   * Replaced querySelector method by much faster method, getElementByID in changeSliderLabel function
