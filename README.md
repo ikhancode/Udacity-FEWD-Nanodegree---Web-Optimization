@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
   ~~~~
 
-  * Took this DOM traversal outside the loop and assigned it to a variable where it is computed only once. After these optimizations, the scrolling was acquiring 60fps
+* Took this DOM traversal outside the loop and assigned it to a variable where it is computed only once. After these optimizations, the scrolling was acquiring 60fps
 ~~~~
 var randPiz = document.getElementById("randomPizzas");
 ~~~~
