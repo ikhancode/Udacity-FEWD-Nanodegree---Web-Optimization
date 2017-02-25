@@ -12,7 +12,7 @@ https://github.com/ikhancode/Udacity-FEWD-Nanodegree---Web-Optimization.git
 
   ```bash
   $> cd /path/to/your-project-folder
-  $> python -m SimpleHTTPServer 8080
+  $> python3 -m http.server
   ```
 
 3. Open a browser and visit localhost:8080
@@ -20,7 +20,7 @@ https://github.com/ikhancode/Udacity-FEWD-Nanodegree---Web-Optimization.git
 
   ``` bash
   $> cd /path/to/your-project-folder
-  $> ./ngrok http 8080
+  $> ./ngrok http 8000
   ```
 
 5. Copy the public URL ngrok gives you on your browser and project's homepage should show up.
@@ -33,7 +33,7 @@ https://github.com/ikhancode/Udacity-FEWD-Nanodegree---Web-Optimization.git
 Was able to get a PageSpeed Insights score of 95 and 94 mobile and desktop respectively by doing the following:
   * Compressed / optimized all images. Also resized pizzeria image and saved it separately with the original image. Original one is used in pizza.html and small (resized) one is used index.html.
   * Added a media query attribute to use print.css only when the screen is in print mode.
-  * Removed online requesting of web fonts and instead added a script at the bottom of the body section to assign fonts.
+  * Removed online requesting of web fonts and instead added an async script at the bottom of the body which avoids render blocking
   * Removed the requesting of style.css file. Inlined it instead.
   * Added async attribute in for requesting analytics.js and perfmatters.js and moved their tags at the bottom of the body section
 
