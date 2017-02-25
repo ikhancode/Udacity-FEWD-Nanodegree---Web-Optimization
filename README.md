@@ -41,6 +41,36 @@ Was able to get a PageSpeed Insights score of 95 and 94 mobile and desktop respe
 #####Frame rate
   Optimizations made to `views/js/main.js` make `views/pizza.html` render with a consistent frame-rate at 60fps when scrolling.
 ######Optimization
+* Main thing I optimized here is to make the function dynamically set the amount of pizza's depending on the size of user's screen.
+  ~~~~
+  // Generates the sliding pizzas when the page loads.
+document.addEventListener('DOMContentLoaded', function() {
+  var cols = 8;
+  var s = 256;
+  var elem = "";
+
+  /*Assigned this DOM traversal in a variable outside the loop to avoid repeated traversing in the
+  loop (thus making the loop run faster). Also replaced querySelector method with a much faster one, getElementByID.*/
+  var movPiz = document.getElementById("movingPizzas1");
+
+   // Dynamic way of setting number of pizzas needed to cover the user's screen
+  var rows = window.screen.height / s;
+  var perfNumPizzas = Math.ceil(rows * cols);
+
+  for (var i = 0; i < perfNumPizzas; i++) {
+    elem = document.createElement('img');
+    elem.className = 'mover';
+    elem.src = "images/pizza.png";
+    elem.style.height = "100px";
+    elem.style.width = "73.333px";
+    elem.basicLeft = (i % cols) * s;
+    elem.style.top = (Math.floor(i / cols) * s) + 'px';
+    movPiz.appendChild(elem);
+  }
+  updatePositions();
+});
+  ~~~~
+
   * Took this DOM traversal outside the loop and assigned it to a variable where it is computed only once. After these optimizations, the scrolling was acquiring 60fps
 ~~~~
 var randPiz = document.getElementById("randomPizzas");
@@ -125,35 +155,6 @@ Time to resize pizzas is less than 5 ms using the pizza size slider on the views
       randomPizzas[i].style.width = newWidth + "%";
     }
   }
-  ~~~~
-  * Main thing I optimized here is to make the function dynamically set the amount of pizza's depending on the size of user's screen.
-  ~~~~
-  // Generates the sliding pizzas when the page loads.
-document.addEventListener('DOMContentLoaded', function() {
-  var cols = 8;
-  var s = 256;
-  var elem = "";
-
-  /*Assigned this DOM traversal in a variable outside the loop to avoid repeated traversing in the
-  loop (thus making the loop run faster). Also replaced querySelector method with a much faster one, getElementByID.*/
-  var movPiz = document.getElementById("movingPizzas1");
-
-   // Dynamic way of setting number of pizzas needed to cover the user's screen
-  var rows = window.screen.height / s;
-  var perfNumPizzas = Math.ceil(rows * cols);
-
-  for (var i = 0; i < perfNumPizzas; i++) {
-    elem = document.createElement('img');
-    elem.className = 'mover';
-    elem.src = "images/pizza.png";
-    elem.style.height = "100px";
-    elem.style.width = "73.333px";
-    elem.basicLeft = (i % cols) * s;
-    elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    movPiz.appendChild(elem);
-  }
-  updatePositions();
-});
   ~~~~
 
   * Replaced querySelector method by much faster method, getElementByID in changeSliderLabel function
