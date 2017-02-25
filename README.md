@@ -126,7 +126,7 @@ Time to resize pizzas is less than 5 ms using the pizza size slider on the views
     }
   }
   ~~~~
-  *Main thing I changed here is to make the function dynamically set the amount of pizza's depending on the size of user's screen
+  * Main thing I optimized here is to make the function dynamically set the amount of pizza's depending on the size of user's screen.
   ~~~~
   // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
